@@ -1,0 +1,367 @@
+.hero {
+  padding-top: 74px;
+}
+
+.hero__panel {
+  position: relative;
+  margin: clamp(8px, 1vw, 14px);
+  margin-top: 0;
+  border-radius: var(--r-xl);
+  overflow: clip;
+  isolation: isolate;
+  min-height: min(90svh, 900px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+  padding: clamp(40px, 5.5vw, 84px) clamp(24px, 4vw, 68px) clamp(30px, 3.5vw, 52px);
+  background: #2a0f3d;
+  color: #fff;
+}
+
+/* ------------------------------------------------------------------
+   Degradê em malha: manchas borradas que se movem devagar
+   ------------------------------------------------------------------ */
+/* --py vem do parallax de scroll, --dx/--dy do movimento do mouse */
+.mesh {
+  position: absolute;
+  inset: -24%;
+  z-index: -2;
+  filter: blur(58px) saturate(155%);
+  will-change: transform;
+  transform: translate3d(var(--dx, 0px), calc(var(--py, 0px) + var(--dy, 0px)), 0);
+  transition: transform 0.5s var(--ease-soft);
+}
+
+.mesh__blob {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.mesh__blob--1 {
+  width: 62%;
+  height: 74%;
+  left: -6%;
+  top: 6%;
+  background: radial-gradient(circle at 50% 50%, var(--orange) 0%, transparent 68%);
+  animation: drift-1 19s var(--ease-soft) infinite alternate;
+}
+
+.mesh__blob--2 {
+  width: 66%;
+  height: 82%;
+  right: -8%;
+  top: -12%;
+  background: radial-gradient(circle at 50% 50%, var(--pink) 0%, transparent 68%);
+  animation: drift-2 23s var(--ease-soft) infinite alternate;
+}
+
+.mesh__blob--3 {
+  width: 58%;
+  height: 68%;
+  left: 22%;
+  bottom: -18%;
+  background: radial-gradient(circle at 50% 50%, #ff5c2b 0%, transparent 66%);
+  animation: drift-3 17s var(--ease-soft) infinite alternate;
+}
+
+.mesh__blob--4 {
+  width: 46%;
+  height: 60%;
+  right: 6%;
+  bottom: -6%;
+  background: radial-gradient(circle at 50% 50%, #7b2ff7 0%, transparent 70%);
+  animation: drift-4 26s var(--ease-soft) infinite alternate;
+}
+
+@keyframes drift-1 {
+  to {
+    transform: translate3d(16%, 10%, 0) scale(1.18);
+  }
+}
+
+@keyframes drift-2 {
+  to {
+    transform: translate3d(-14%, 18%, 0) scale(1.12);
+  }
+}
+
+@keyframes drift-3 {
+  to {
+    transform: translate3d(10%, -16%, 0) scale(1.24);
+  }
+}
+
+@keyframes drift-4 {
+  to {
+    transform: translate3d(-18%, -12%, 0) scale(1.1);
+  }
+}
+
+/* granulado sutil: tira o aspecto plástico do degradê */
+.hero__grain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.16;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ------------------------------------------------------------------
+   Conteúdo
+   ------------------------------------------------------------------ */
+.hero__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(40px, 7vw, 96px);
+  flex: 1;
+  width: 100%;
+  max-width: 1360px;
+  margin-inline: auto;
+}
+
+.hero__title {
+  font-size: clamp(2.3rem, 7.6vw, 7.4rem);
+  /* Flex de propósito: entre irmãos em fluxo normal as margens negativas
+     colapsam e só uma das duas conta, sobrando ~0.3em por linha. */
+  display: flex;
+  flex-direction: column;
+}
+
+/* janela por linha: a frase sobe de dentro dela na entrada.
+   Aqui o em já resolve contra o corpo do h1, mas mantenho folga generosa
+   para acento e descida de letra. */
+.hero__mask {
+  display: block;
+  overflow: hidden;
+  /* O padding é a folga para acento e descida de letra não serem cortados.
+     A margem negativa devolve esse espaço ao layout, senão sobram 0.6em
+     entre as duas linhas e o título fica solto. */
+  padding-block: 0.3em;
+  margin-block: -0.2em;
+}
+
+.hero__line {
+  display: block;
+  white-space: nowrap;
+  transform: translateY(126%);
+  animation: line-up 1.1s var(--ease) forwards;
+}
+
+@keyframes line-up {
+  to {
+    transform: none;
+  }
+}
+
+.hero__foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(28px, 5vw, 72px);
+  flex-wrap: wrap;
+}
+
+.hero__pitch {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  max-width: 44ch;
+  animation: rise 1s var(--ease) 1.25s backwards;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+.hero__pitch p {
+  font-size: clamp(1.02rem, 1.5vw, 1.2rem);
+  line-height: 1.55;
+  color: rgb(255 255 255 / 0.92);
+}
+
+.hero__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hero__btn-outline {
+  --btn-bg: transparent;
+  --btn-fg: #fff;
+  box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.45);
+}
+
+.hero__btn-outline .btn__dot {
+  background: rgb(255 255 255 / 0.16);
+  color: #fff;
+}
+
+.hero__btn-outline:hover .btn__dot {
+  background: #fff;
+  color: var(--ink);
+}
+
+/* ------------------------------------------------------------------
+   Indicador de rolagem
+   ------------------------------------------------------------------ */
+.cue {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 8px;
+  animation: rise 1s var(--ease) 1.5s backwards;
+}
+
+.cue__label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.7);
+}
+
+.cue__rail {
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 38px;
+  border-radius: var(--r-pill);
+  border: 1.5px solid rgb(255 255 255 / 0.45);
+  overflow: hidden;
+}
+
+.cue__dot {
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  width: 4px;
+  height: 8px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: #fff;
+  animation: cue-fall 1.9s var(--ease-soft) infinite;
+}
+
+@keyframes cue-fall {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+}
+
+.cue:hover .cue__rail {
+  border-color: #fff;
+}
+
+/* ------------------------------------------------------------------
+   Números logo abaixo do hero
+   ------------------------------------------------------------------ */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 3vw, 48px);
+  padding-block: clamp(48px, 5.5vw, 84px);
+}
+
+.stats__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 24px;
+}
+
+/* a linha de cima é desenhada da esquerda para a direita quando aparece */
+.stats__item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--pink), var(--orange));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.1s var(--ease);
+  transition-delay: calc(var(--i, 0) * 160ms);
+}
+
+.reveal.is-in .stats__item::before {
+  transform: scaleX(1);
+}
+
+.stats__value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 4.8vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  background: linear-gradient(115deg, var(--pink), var(--orange));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.stats__value em {
+  font-style: normal;
+  font-size: 0.42em;
+  letter-spacing: -0.02em;
+}
+
+.stats__label {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  max-width: 30ch;
+  text-wrap: pretty;
+}
+
+@media (max-width: 700px) {
+  /* no celular sobram só ~295px úteis dentro do painel, e as linhas não
+     quebram: o corpo precisa de um coeficiente menor para caber */
+  .hero__title {
+    font-size: clamp(1.9rem, 9.4vw, 4rem);
+  }
+}
+
+@media (max-width: 860px) {
+  .hero__panel {
+    min-height: auto;
+  }
+
+  .hero__foot {
+    align-items: flex-start;
+  }
+
+  .cue {
+    display: none;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .stats__label {
+    max-width: none;
+  }
+}

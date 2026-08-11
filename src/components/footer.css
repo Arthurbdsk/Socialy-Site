@@ -1,0 +1,138 @@
+.ftr {
+  position: relative;
+  border-top: 1.5px solid var(--line);
+  padding-top: clamp(40px, 5vw, 66px);
+  padding-bottom: clamp(20px, 2.4vw, 30px);
+  overflow: clip;
+}
+
+/* fio de cor correndo no topo do rodapé */
+.ftr::before {
+  content: "";
+  position: absolute;
+  top: -1.5px;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: var(--grad-wide);
+  background-size: 200% 100%;
+  animation: pan 9s linear infinite;
+}
+
+.ftr__inner {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+}
+
+.ftr__brand {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.ftr__mark {
+  width: 34px;
+  height: auto;
+  flex-shrink: 0;
+  transition: transform 0.7s var(--ease-back);
+}
+
+.ftr__brand:hover .ftr__mark {
+  transform: rotate(180deg) scale(1.1);
+}
+
+.ftr__word {
+  font-size: 1.35rem;
+}
+
+.ftr__brand p {
+  margin-top: 6px;
+  font-size: 0.94rem;
+  color: var(--ink-soft);
+  max-width: 30ch;
+}
+
+.ftr__nav,
+.ftr__social {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+/* ------------------------------------------------------------------
+   Assinatura gigante
+   ------------------------------------------------------------------ */
+.ftr__sign {
+  margin-top: clamp(40px, 6vw, 80px);
+  padding-inline: var(--gutter);
+  line-height: 0.78;
+  user-select: none;
+}
+
+.ftr__sign span {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(4rem, 19vw, 19rem);
+  letter-spacing: -0.055em;
+  text-align: center;
+  background: var(--grad-wide);
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: pan 16s linear infinite;
+}
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+.ftr__base {
+  margin-top: clamp(24px, 3vw, 40px);
+  padding-top: 20px;
+  border-top: 1.5px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+}
+
+.ftr__top {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+}
+
+.ftr__top-dot {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--grad);
+  color: #fff;
+  transition: transform 0.5s var(--ease-back);
+}
+
+.ftr__top:hover .ftr__top-dot {
+  transform: translateY(-4px);
+}
+
+@media (max-width: 860px) {
+  .ftr__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ftr__brand {
+    grid-column: 1 / -1;
+  }
+}

@@ -1,0 +1,15 @@
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  display: inline-block;
+  /* laranja à esquerda, rosa à direita, como no logotipo original */
+  background: linear-gradient(95deg, var(--orange) 5%, var(--pink) 85%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: pan 9s linear infinite;
+}

@@ -1,0 +1,253 @@
+.hdr {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: var(--shell-pad) var(--shell-pad) 0;
+  pointer-events: none;
+  transition: transform 0.55s var(--ease);
+}
+
+/* sai de cena ao descer, volta assim que o usuário sobe */
+.hdr.is-hidden {
+  transform: translateY(-115%);
+}
+
+.hdr__bar {
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: 74px;
+  padding-inline: clamp(16px, 3vw, 34px);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  background: var(--paper);
+  transition: box-shadow 0.4s var(--ease-soft), border-radius 0.4s var(--ease-soft);
+}
+
+/* Ao rolar, a barra se destaca do conteúdo que passa por baixo */
+.hdr.is-stuck .hdr__bar {
+  border-radius: var(--r-xl);
+  box-shadow: 0 1px 0 var(--line), 0 14px 34px -22px rgb(0 0 0 / 0.5);
+}
+
+.hdr__brand {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.5s var(--ease-back);
+}
+
+.hdr__brand:hover {
+  transform: scale(1.04);
+}
+
+.hdr__mark {
+  width: 30px;
+  height: auto;
+  transition: transform 0.8s var(--ease-back);
+}
+
+.hdr__brand:hover .hdr__mark {
+  transform: rotate(180deg);
+}
+
+/* fio de cor que cresce do centro quando a barra descola do topo */
+.hdr__bar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: var(--grad-wide);
+  background-size: 200% 100%;
+  transform: scaleX(0);
+  transition: transform 0.7s var(--ease);
+  animation: pan 8s linear infinite;
+}
+
+.hdr.is-stuck .hdr__bar::after {
+  transform: scaleX(1);
+}
+
+.hdr__nav {
+  display: flex;
+  gap: clamp(18px, 2.4vw, 34px);
+}
+
+/* O rótulo gira: a cópia de cima sai e a de baixo entra no lugar */
+.hdr__link {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+  padding-block: 6px;
+  height: 2.1em;
+}
+
+.hdr__link-in {
+  grid-area: 1 / 1;
+  transition: transform 0.55s var(--ease), color 0.4s var(--ease-soft);
+}
+
+.hdr__link-in--ghost {
+  transform: translateY(115%);
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hdr__link:hover .hdr__link-in {
+  transform: translateY(-115%);
+}
+
+.hdr__link:hover .hdr__link-in--ghost {
+  transform: translateY(0);
+}
+
+.hdr__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1.5px;
+  background: var(--grad);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s var(--ease);
+}
+
+.hdr__link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.hdr__end {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* ---- botão sanduíche ---- */
+.burger {
+  display: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--ink);
+  position: relative;
+}
+
+.burger span {
+  position: absolute;
+  left: 50%;
+  width: 17px;
+  height: 1.8px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.42s var(--ease), opacity 0.2s linear;
+}
+
+.burger span:nth-child(1) {
+  transform: translate(-50%, -4px);
+}
+
+.burger span:nth-child(2) {
+  transform: translate(-50%, 4px);
+}
+
+.burger.is-open span:nth-child(1) {
+  transform: translate(-50%, 0) rotate(45deg);
+}
+
+.burger.is-open span:nth-child(2) {
+  transform: translate(-50%, 0) rotate(-45deg);
+}
+
+/* ---- painel mobile ---- */
+.sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  background: var(--ink);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  padding: 120px var(--gutter) 48px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-soft), visibility 0s linear 0.4s;
+}
+
+.sheet.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.4s var(--ease-soft), visibility 0s;
+}
+
+.sheet__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sheet__nav a {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 11vw, 3.4rem);
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s var(--ease-soft), transform 0.6s var(--ease);
+}
+
+.sheet.is-open .sheet__nav a {
+  opacity: 1;
+  transform: none;
+}
+
+.sheet__idx {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--orange);
+  letter-spacing: 0.06em;
+}
+
+.sheet__cta {
+  align-self: flex-start;
+}
+
+@media (max-width: 900px) {
+  .hdr__nav,
+  .hdr__cta {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+  }
+
+  .hdr__bar {
+    height: 66px;
+  }
+}

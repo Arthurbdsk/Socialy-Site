@@ -1,0 +1,232 @@
+.mtd {
+  background: var(--wash);
+  overflow: clip;
+}
+
+.mtd__aura {
+  width: 50vw;
+  height: 50vw;
+  max-width: 640px;
+  max-height: 640px;
+  right: -16vw;
+  bottom: -10%;
+  opacity: 0.18;
+}
+
+.mtd__deck {
+  margin: clamp(28px, 4vw, 54px) 0 clamp(40px, 5vw, 68px);
+  max-width: 28ch;
+}
+
+.mtd__cols {
+  display: grid;
+  grid-template-columns: minmax(260px, 360px) 1fr;
+  gap: clamp(32px, 5vw, 88px);
+  align-items: start;
+}
+
+.mtd__aside {
+  position: sticky;
+  top: 108px;
+}
+
+/* ---- cartão de pagamento ---- */
+.pay {
+  position: relative;
+  overflow: hidden;
+  background: var(--paper);
+  border-radius: var(--r-lg);
+  padding: clamp(26px, 3vw, 38px);
+  border: 1.5px solid var(--line);
+}
+
+/* fio de cor no topo do cartão */
+.pay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--grad-wide);
+  background-size: 200% 100%;
+  animation: pan 7s linear infinite;
+}
+
+.pay__split {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.pay__half {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pay__pct {
+  font-family: var(--font-display);
+  font-weight: 700;
+  /* Teto baixo de propósito: este cartão trava em 360px, então corpo em vw
+     cresce com a tela enquanto a caixa não cresce, e o número acaba
+     encostando no sinal de mais. */
+  font-size: clamp(1.9rem, 5vw, 2.5rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.pay__when {
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+.pay__plus {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: var(--orange);
+  align-self: flex-start;
+  line-height: 1.2;
+}
+
+.pay__note {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1.5px solid var(--line);
+  font-size: 0.93rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+/* ---- linha do tempo ---- */
+.mtd__steps {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-left: 34px;
+}
+
+/* trilho cinza (::before) com preenchimento colorido (::after) guiado pelo scroll */
+.mtd__steps::before,
+.mtd__steps::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  border-radius: 2px;
+}
+
+.mtd__steps::before {
+  background: var(--line-strong);
+}
+
+.mtd__steps::after {
+  background: linear-gradient(180deg, var(--pink), var(--orange));
+  transform: scaleY(var(--progress, 0));
+  transform-origin: top;
+}
+
+.mtd__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: clamp(12px, 1.6vw, 22px);
+  padding-block: clamp(20px, 2.4vw, 30px);
+  border-top: 1.5px solid var(--line-strong);
+  transition: transform 0.5s var(--ease);
+}
+
+.mtd__step:last-child {
+  border-bottom: 1.5px solid var(--line-strong);
+}
+
+.mtd__step:hover {
+  transform: translateX(10px);
+}
+
+/* bolinha na linha do tempo */
+.mtd__marker {
+  position: absolute;
+  left: -34px;
+  top: calc(clamp(20px, 2.4vw, 30px) + 8px);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--wash);
+  border: 2px solid var(--line-strong);
+  transition: border-color 0.4s var(--ease-soft), transform 0.5s var(--ease-back),
+    background 0.4s var(--ease-soft);
+}
+
+.reveal.is-in .mtd__marker {
+  background: var(--paper);
+  border-color: var(--pink);
+}
+
+.mtd__step:hover .mtd__marker {
+  transform: scale(1.45);
+  background: var(--pink);
+}
+
+.mtd__num {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  padding-top: 6px;
+  transition: color 0.4s var(--ease-soft);
+}
+
+.mtd__step:hover .mtd__num {
+  color: var(--pink);
+}
+
+.mtd__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2.3vw, 1.75rem);
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.mtd__text p {
+  font-size: 0.98rem;
+  line-height: 1.58;
+  color: var(--ink-soft);
+  max-width: 54ch;
+  text-wrap: pretty;
+}
+
+@media (max-width: 900px) {
+  .mtd__cols {
+    grid-template-columns: 1fr;
+  }
+
+  .mtd__aside {
+    position: static;
+  }
+}
+
+@media (max-width: 560px) {
+  .mtd__steps {
+    padding-left: 26px;
+  }
+
+  .mtd__step {
+    grid-template-columns: 36px 1fr;
+  }
+
+  .mtd__marker {
+    left: -26px;
+  }
+}

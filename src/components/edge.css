@@ -1,0 +1,153 @@
+.edge {
+  background: linear-gradient(180deg, var(--paper) 0%, var(--wash) 100%);
+}
+
+.edge__aura {
+  width: 44vw;
+  height: 44vw;
+  max-width: 600px;
+  max-height: 600px;
+  left: -14vw;
+  top: 22%;
+  opacity: 0.2;
+}
+
+.edge__deck {
+  margin: clamp(28px, 4vw, 54px) 0 clamp(30px, 4vw, 52px);
+}
+
+.acc {
+  border-top: 1.5px solid var(--line-strong);
+}
+
+.acc__wrap {
+  border-bottom: 1.5px solid var(--line-strong);
+}
+
+.acc__h {
+  font: inherit;
+  font-weight: inherit;
+}
+
+.acc__row {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 40px);
+  padding: clamp(20px, 2.4vw, 32px) clamp(14px, 2vw, 28px);
+  text-align: left;
+  color: var(--ink);
+  transition: color 0.4s var(--ease-soft), padding-left 0.5s var(--ease);
+}
+
+/* degradê da marca varrendo de baixo para cima */
+.acc__row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--grad);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.55s var(--ease);
+}
+
+.acc__row:hover,
+.acc__row.is-open {
+  color: #fff;
+  padding-left: clamp(22px, 2.8vw, 40px);
+}
+
+.acc__row:hover::before,
+.acc__row.is-open::before {
+  transform: scaleY(1);
+}
+
+.acc__num {
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  color: var(--pink);
+  transition: color 0.4s var(--ease-soft);
+  flex-shrink: 0;
+}
+
+.acc__row:hover .acc__num,
+.acc__row.is-open .acc__num {
+  color: rgb(255 255 255 / 0.85);
+}
+
+.acc__title {
+  flex: 1;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 3.4vw, 2.5rem);
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.acc__toggle {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: clamp(38px, 3.4vw, 48px);
+  height: clamp(38px, 3.4vw, 48px);
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  transition: transform 0.6s var(--ease-back), background 0.4s var(--ease-soft),
+    color 0.4s var(--ease-soft);
+}
+
+.acc__row:hover .acc__toggle,
+.acc__row.is-open .acc__toggle {
+  background: #fff;
+  color: var(--pink);
+}
+
+.acc__row.is-open .acc__toggle {
+  transform: rotate(135deg);
+}
+
+/* altura vem medida do componente, em pixel */
+.acc__panel {
+  overflow: hidden;
+  transition: height 0.55s var(--ease);
+}
+
+.acc__panel-inner {
+  /* o padding vive aqui dentro para o scrollHeight bater com o que abre */
+  overflow: hidden;
+}
+
+.acc__panel p {
+  padding: 10px clamp(14px, 2vw, 28px) clamp(26px, 3vw, 38px);
+  padding-left: clamp(46px, 6.4vw, 108px);
+  max-width: 76ch;
+  color: var(--ink-soft);
+  font-size: clamp(0.98rem, 1.3vw, 1.1rem);
+  line-height: 1.62;
+  text-wrap: pretty;
+  border-left: 2px solid transparent;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s var(--ease-soft) 0.15s, transform 0.6s var(--ease) 0.12s;
+}
+
+.acc__panel.is-open p {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 620px) {
+  .acc__num {
+    display: none;
+  }
+
+  .acc__panel p {
+    padding-left: clamp(14px, 2vw, 28px);
+  }
+}

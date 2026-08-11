@@ -1,0 +1,59 @@
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+  transition: transform 1s var(--ease);
+}
+
+.intro--out {
+  transform: translateY(-101%);
+}
+
+.intro__lockup {
+  width: clamp(150px, 22vw, 240px);
+  height: auto;
+  animation: intro-pop 0.85s var(--ease-back) both;
+}
+
+.intro--out .intro__lockup {
+  animation: intro-fade 0.5s var(--ease-soft) forwards;
+}
+
+@keyframes intro-pop {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.9);
+  }
+}
+
+@keyframes intro-fade {
+  to {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+}
+
+/* barra de carregamento que corre até a borda antes da cortina subir */
+.intro__bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  transform-origin: left;
+  background: var(--grad-wide);
+  background-size: 200% 100%;
+  animation: intro-load 0.95s var(--ease) both, pan 3s linear infinite;
+}
+
+@keyframes intro-load {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}

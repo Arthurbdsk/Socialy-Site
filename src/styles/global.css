@@ -1,0 +1,452 @@
+/* ------------------------------------------------------------------
+   Tokens
+   ------------------------------------------------------------------ */
+:root {
+  /* Cores tiradas da logo */
+  --pink: #e01b63;
+  --pink-deep: #b0114c;
+  --orange: #f07e24;
+  --orange-warm: #f7a03c;
+  --violet: #7b2ff7;
+
+  --grad: linear-gradient(115deg, var(--pink), var(--orange));
+  --grad-wide: linear-gradient(
+    100deg,
+    var(--pink) 0%,
+    var(--orange) 32%,
+    var(--pink) 62%,
+    var(--orange) 100%
+  );
+
+  --ink: #0c0c0d;
+  --ink-soft: #46464a;
+  --ink-faint: #86868c;
+  --paper: #ffffff;
+  --shell: #e6e2de;
+  --line: #e4e1dd;
+  --line-strong: #d3cec8;
+  --wash: #f4f2ef;
+
+  --r-xl: 32px;
+  --r-lg: 22px;
+  --r-md: 14px;
+  --r-pill: 999px;
+
+  --gutter: clamp(20px, 4vw, 64px);
+  --shell-pad: clamp(8px, 1vw, 16px);
+
+  --font-display: "Outfit", system-ui, sans-serif;
+  --font-text: "Archivo", system-ui, sans-serif;
+
+  --ease: cubic-bezier(0.22, 0.68, 0, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ------------------------------------------------------------------
+   Reset
+   ------------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--shell);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--pink);
+  color: #fff;
+}
+
+/* ------------------------------------------------------------------
+   Casca
+   ------------------------------------------------------------------ */
+.shell {
+  background: var(--paper);
+  border-radius: var(--r-xl);
+  margin: var(--shell-pad);
+  overflow: clip;
+  isolation: isolate;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1360px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(76px, 10vw, 152px);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  background: var(--ink);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 0 0 var(--r-md) 0;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* Manchas de cor da marca ao fundo das seções claras */
+.aura {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.aura--pink {
+  background: radial-gradient(circle, var(--pink), transparent 68%);
+}
+
+.aura--orange {
+  background: radial-gradient(circle, var(--orange), transparent 68%);
+}
+
+.section > .wrap {
+  position: relative;
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------------
+   Tipografia
+   ------------------------------------------------------------------ */
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+/* A palavra-cartaz que abre cada seção.
+   Um elemento só, texto corrido: dá para selecionar e copiar normalmente. */
+.banner {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.84;
+  letter-spacing: -0.05em;
+  text-align: center;
+  /* Teto em px, não em vw: acima de ~1360px o container para de crescer e o
+     vw continuaria subindo. 11.5rem é o que faz a maior palavra
+     ("Diferenciais", 12 letras) caber nos 1232px úteis. */
+  font-size: clamp(2.6rem, 12.5vw, 11.5rem);
+  max-width: 100%;
+  background: var(--grad-wide);
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: pan 14s linear infinite;
+}
+
+@keyframes pan {
+  to {
+    background-position: 260% 0;
+  }
+}
+
+.deck {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.4rem, 3.2vw, 2.5rem);
+  line-height: 1.14;
+  letter-spacing: -0.03em;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+
+/* trecho destacado dentro de uma frase */
+.deck em,
+.hl {
+  font-style: normal;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lede {
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  color: var(--ink-soft);
+  max-width: 56ch;
+}
+
+.num {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+/* ------------------------------------------------------------------
+   Barra de progresso da leitura
+   ------------------------------------------------------------------ */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 120;
+  background: var(--grad-wide);
+  background-size: 200% 100%;
+  transform-origin: left;
+  transform: scaleX(var(--p, 0));
+  animation: pan 8s linear infinite;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------
+   Botões
+   ------------------------------------------------------------------ */
+.btn {
+  --btn-bg: var(--ink);
+  --btn-fg: #fff;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 20px 15px 26px;
+  border-radius: var(--r-pill);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: transform 0.5s var(--ease), color 0.35s var(--ease-soft);
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--grad);
+  transform: translateY(101%);
+  transition: transform 0.55s var(--ease);
+}
+
+.btn > * {
+  position: relative;
+  z-index: 1;
+}
+
+.btn:hover::before {
+  transform: translateY(0);
+}
+
+.btn__dot {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ink);
+  transition: transform 0.5s var(--ease-back);
+}
+
+.btn:hover .btn__dot {
+  transform: rotate(45deg) scale(1.12);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink);
+  box-shadow: inset 0 0 0 1.5px var(--line-strong);
+}
+
+.btn--ghost:hover {
+  --btn-fg: #fff;
+}
+
+.btn--ghost .btn__dot {
+  background: var(--ink);
+  color: #fff;
+}
+
+.btn--light {
+  --btn-bg: #fff;
+  --btn-fg: var(--ink);
+}
+
+.btn--light:hover {
+  --btn-fg: #fff;
+}
+
+.btn--light .btn__dot {
+  background: var(--ink);
+  color: #fff;
+}
+
+.btn--light:hover .btn__dot {
+  background: #fff;
+  color: var(--ink);
+}
+
+/* Link com sublinhado que corre de fora pra dentro */
+.ulink {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 2px;
+}
+
+.ulink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1.5px;
+  background: var(--grad);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s var(--ease);
+}
+
+.ulink:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ------------------------------------------------------------------
+   Reveal no scroll
+   ------------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s var(--ease-soft), transform 0.9s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Variante máscara: o bloco inteiro sobe de dentro de uma janela.
+
+   A folga para acento e cedilha fica no FILHO, não no wrapper. O wrapper é um
+   div fora do título, então em ali resolveria contra os 16px do body e não
+   contra o corpo real da palavra-cartaz: era isso que cortava o Ç de Serviços
+   e o acento de Método. */
+.reveal--mask {
+  opacity: 1;
+  transform: none;
+  /* clip-path com inset negativo nas laterais recorta SÓ em cima e embaixo.
+     Com overflow:hidden a máscara cortava a primeira e a última letra
+     sempre que a palavra passava da largura do container. */
+  clip-path: inset(0 -100vw);
+}
+
+.reveal--mask > * {
+  display: block;
+  /* line-height é 0.84, então o glifo já nasce maior que a caixa de linha.
+     0.3em cobre a sobra dos dois lados mais acento e cedilha. */
+  padding-block: 0.3em;
+  transform: translateY(122%);
+  transition: transform 1.05s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal--mask.is-in > * {
+  transform: none;
+}
+
+/* ------------------------------------------------------------------
+   Scroll com inércia (Lenis)
+
+   O Lenis controla a posição quadro a quadro, então o scroll-behavior
+   nativo tem que sair do caminho ou os dois brigam.
+   ------------------------------------------------------------------ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
