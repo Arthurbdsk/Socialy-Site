@@ -51,6 +51,20 @@
   aspect-ratio: 16 / 8;
 }
 
+/* O destaque ocupa a linha toda, então os demais entram de dois em dois.
+   Quando a conta dá ímpar, o último ficaria sozinho com um buraco ao lado:
+   nesse caso ele abre a largura inteira. A regra se ajusta sozinha quando
+   um projeto entra ou sai da lista. */
+@media (min-width: 701px) {
+  .work__grid:has(.is-featured) .work__card:last-child:nth-child(even) {
+    grid-column: 1 / -1;
+  }
+
+  .work__grid:has(.is-featured) .work__card:last-child:nth-child(even) .work__cover {
+    aspect-ratio: 16 / 8;
+  }
+}
+
 .work__cover img {
   width: 100%;
   height: 100%;
