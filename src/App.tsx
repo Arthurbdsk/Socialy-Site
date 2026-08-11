@@ -10,6 +10,9 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Intro from "./components/Intro";
 import { useSmoothScroll } from "./lib/smooth";
+// O painel da Vercel mostra "@vercel/analytics/next", que é o caminho do
+// Next.js. Este projeto é Vite + React, então o subcaminho é /react.
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App() {
   useSmoothScroll();
@@ -35,6 +38,7 @@ export default function App() {
         </main>
         <Footer />
       </div>
+      <Analytics />
     </>
   );
 }
